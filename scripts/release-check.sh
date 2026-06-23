@@ -32,6 +32,21 @@ rm -rf "$TMP"
 echo "Agent setup smoke passed."
 
 echo ""
+echo "==> Dogfood agent setup (cursor --with-rules)"
+TMP_DOGFOOD="$(mktemp -d)"
+(
+  cd "$TMP_DOGFOOD"
+  git init -q -b main
+  git config user.email "dogfood@test.local"
+  git config user.name "Dogfood"
+  echo demo > README.md
+  git add README.md
+  git commit -q -m init
+  "$ROOT/scripts/dogfood-agent.sh" cursor
+)
+rm -rf "$TMP_DOGFOOD"
+
+echo ""
 echo "==> LangGraph harness smoke"
 ./scripts/harness-langgraph-smoke.sh
 

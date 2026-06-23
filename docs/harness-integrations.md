@@ -34,19 +34,29 @@ cd examples/harnesses/langgraph
 attestack verify .attestack/bundles/*.attestack.zip --strict
 ```
 
-## Session wrapper
+## Session wrapper (OpenHands, Aider, eval runners)
 
-Any harness that can run shell commands:
+Any harness that runs shell commands can wrap a session without code changes to Attestack:
+
+| Harness | Example |
+|---------|---------|
+| OpenHands | [`examples/harnesses/openhands/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/openhands) |
+| Aider | [`examples/harnesses/aider/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/aider) |
+| Generic | `scripts/agent-session.sh` |
 
 ```bash
 ./scripts/agent-session.sh start "eval run"
-# harness runs here; use attestack run -- for subprocess steps
-./scripts/agent-session.sh finish
+attestack run -- npm test          # optional: record subprocess steps
+./scripts/agent-session.sh finish  # stop + bundle create + verify
 ```
+
+OpenHands and Aider include `run-with-evidence.sh` wrappers you can copy or call from your project root.
 
 ## CI entrypoints
 
-GitHub Actions and similar: see [CI integration](ci-integration.md) and `examples/github-actions/`.
+GitHub Actions, Dagger, Earthly, and Nix: see [CI integration](ci-integration.md) and `examples/github-actions/`.
+
+Pull requests on GitHub get an automated evidence summary comment when the CI evidence workflow runs (see `.github/workflows/attestack-evidence.yml`).
 
 ## Verify
 

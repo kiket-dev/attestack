@@ -39,6 +39,44 @@ attestack bundle create
 attestack verify .attestack/bundles/*.attestack.zip
 ```
 
+## Pipeline wrappers (Dagger, Earthly, Nix)
+
+Wrap the pipeline entrypoint with `attestack ci` so the whole run is one signed bundle.
+
+### Dagger
+
+```bash
+attestack ci start --title "Dagger ${DAGGER_SESSION:-local}"
+attestack ci run -- dagger call test
+attestack ci finish
+```
+
+Run from your git checkout root. Upload `.attestack/bundles/*.attestack.zip` as a CI artifact.
+
+### Earthly
+
+```bash
+attestack ci start --title "Earthly ${EARTHLY_TARGET:-+test}"
+attestack ci run -- earthly +test
+attestack ci finish
+```
+
+For monorepos, use one session per target or one session per pipeline job.
+
+### Nix flake check
+
+```bash
+attestack ci start --title "nix flake check"
+attestack ci run -- nix flake check
+attestack ci finish
+```
+
+In a `flake.nix` CI derivation, call the same three commands around your test attribute — Attestack stays outside Nix; only the wrapped command runs in the sandbox.
+
+### GitHub Actions reusable workflow
+
+See `.github/workflows/attestack-evidence.yml` and `examples/github-actions/attestack-evidence.yml`.
+
 After `attestack ci finish`, generate a PR body snippet:
 
 ```bash

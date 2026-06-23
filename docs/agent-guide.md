@@ -99,6 +99,8 @@ with attestack_session("my graph run"):
 
 See [harness examples](../examples/harnesses/README.md) for patterns (callback adapter, session wrapper, CI).
 
+**Shell wrappers:** [OpenHands](../examples/harnesses/openhands/), [Aider](../examples/harnesses/aider/).
+
 ## Shell wrapper pattern
 
 For agents without MCP, wrap critical commands:

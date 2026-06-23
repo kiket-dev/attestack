@@ -9,7 +9,7 @@ Attestack records structured evidence (tool calls, prompt/response hashes, decis
 | Pattern | When to use | Examples |
 |---------|-------------|----------|
 | **Callback adapter** | Framework exposes LangChain-style callbacks | [langgraph/](langgraph/) |
-| **Session wrapper** | Shell-driven agents, eval runners | `scripts/agent-session.sh` |
+| **Session wrapper** | Shell-driven agents, eval runners | [openhands/](openhands/), [aider/](aider/), `scripts/agent-session.sh` |
 | **MCP sidecar** | IDE agents (Cursor, Claude Code) | [examples/agents/](../agents/) |
 | **CI helpers** | GitHub Actions, Dagger entrypoints | [examples/github-actions/](../github-actions/) |
 
@@ -29,12 +29,18 @@ pip install -r requirements.txt
 
 See [langgraph/README.md](langgraph/README.md) for details.
 
-## Session wrapper (any harness)
+## Session wrapper (OpenHands, Aider, others)
 
 ```bash
+# OpenHands
+./examples/harnesses/openhands/run-with-evidence.sh "fix auth" openhands cli --task "..."
+
+# Aider
+./examples/harnesses/aider/run-with-evidence.sh "refactor billing" aider --message "..."
+
+# Generic
 ./scripts/agent-session.sh start "eval run"
-# your harness / agent runs here
-./scripts/agent-session.sh finish   # stop + bundle create + verify
+./scripts/agent-session.sh finish
 ```
 
 Use `attestack run --` inside the harness for subprocess steps you want in the evidence chain.
@@ -51,7 +57,7 @@ attestack verify .attestack/bundles/*.attestack.zip --strict
 
 | Harness | Status |
 |---------|--------|
-| LangGraph | Reference callback example |
-| Inspect AI | Planned |
-| OpenHands | Shell wrapper (doc only) |
-| Aider | `agent-session.sh` |
+| LangGraph | Reference callback example + CI smoke |
+| OpenHands | Shell wrapper + docs |
+| Aider | Shell wrapper + docs |
+| Inspect AI | Planned (callback adapter) |
