@@ -1,0 +1,31 @@
+[package]
+name = "attestack-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Attestack developer CLI"
+default-run = "attestack"
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "attestack"
+path = "src/main.rs"
+
+[dependencies]
+attestack-core = { path = "../attestack-core" }
+attestack-store = { path = "../attestack-store" }
+clap.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+time.workspace = true
+toml.workspace = true
+
+[dev-dependencies]
+assert_cmd.workspace = true
+predicates.workspace = true
+tempfile.workspace = true
+zip.workspace = true

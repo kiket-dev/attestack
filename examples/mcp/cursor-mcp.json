@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "attestack": {
+      "command": "/path/to/attestack-mcp",
+      "args": [],
+      "env": {
+        "ATTESTACK_REPO_ROOT": "${workspaceFolder}"
+      }
+    }
+  }
+}

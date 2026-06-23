@@ -1,0 +1,32 @@
+# Attestack
+
+This repository records AI-assisted work with [Attestack](https://kiket-dev.github.io/attestack/).
+
+## Session
+
+Before substantive changes, ensure a session is open:
+
+```bash
+attestack start "short task title"
+```
+
+## Recording evidence
+
+Prefer Attestack MCP tools:
+
+- `attestack_status`, `attestack_note`, `attestack_agent_tool_call`, `attestack_agent_decision`, `attestack_snapshot`
+
+Run verification commands through Attestack:
+
+```bash
+attestack run -- npm test
+```
+
+Use hashes instead of raw prompts when recording AI content.
+
+## Finish
+
+```bash
+attestack stop
+attestack bundle create
+```

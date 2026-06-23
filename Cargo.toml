@@ -1,0 +1,45 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/attestack-core",
+    "crates/attestack-store",
+    "crates/attestack-cli",
+    "crates/attestack-mcp",
+]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+missing_panics_doc = "allow"
+explicit_counter_loop = "allow"
+missing_const_for_fn = "allow"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["Attestack Contributors"]
+
+[workspace.dependencies]
+clap = { version = "4", features = ["derive"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+rand = "0.8"
+time = { version = "0.3", features = ["formatting", "parsing", "serde", "macros"] }
+serde_jcs = "0.2"
+zip = "2"
+tempfile = "3"
+assert_cmd = "2"
+predicates = "3"
+thiserror = "2"
+hex = "0.4"
+base64 = "0.22"
+toml = "0.8"
+fs2 = "0.4"

@@ -1,0 +1,104 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: attestack-linux-x86_64
+            archive: tar
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-24.04-arm
+            name: attestack-linux-aarch64
+            archive: tar
+          - target: x86_64-apple-darwin
+            os: macos-latest
+            name: attestack-macos-x86_64
+            archive: tar
+          - target: aarch64-apple-darwin
+            os: macos-latest
+            name: attestack-macos-aarch64
+            archive: tar
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: attestack-windows-x86_64
+            archive: zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build release binaries
+        run: |
+          cargo build --release -p attestack-cli --target ${{ matrix.target }}
+          cargo build --release -p attestack-mcp --target ${{ matrix.target }}
+
+      - name: Package archive (Unix)
+        if: matrix.archive == 'tar'
+        run: |
+          mkdir -p dist
+          cp "target/${{ matrix.target }}/release/attestack" "dist/attestack"
+          cp "target/${{ matrix.target }}/release/attestack-mcp" "dist/attestack-mcp"
+          chmod +x dist/attestack dist/attestack-mcp
+          tar -czf "dist/${{ matrix.name }}.tar.gz" -C dist attestack attestack-mcp
+          (cd dist && sha256sum "${{ matrix.name }}.tar.gz" > "${{ matrix.name }}.tar.gz.sha256")
+
+      - name: Package archive (Windows)
+        if: matrix.archive == 'zip'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Copy-Item "target/${{ matrix.target }}/release/attestack.exe" "dist/attestack.exe"
+          Copy-Item "target/${{ matrix.target }}/release/attestack-mcp.exe" "dist/attestack-mcp.exe"
+          Compress-Archive -Path dist/attestack.exe,dist/attestack-mcp.exe -DestinationPath "dist/${{ matrix.name }}.zip"
+          $hash = Get-FileHash "dist/${{ matrix.name }}.zip" -Algorithm SHA256
+          "$($hash.Hash.ToLower())  ${{ matrix.name }}.zip" | Out-File -Encoding ascii "dist/${{ matrix.name }}.zip.sha256"
+
+      - name: Run smoke test (Linux)
+        if: matrix.name == 'attestack-linux-x86_64'
+        run: |
+          chmod +x scripts/smoke-with-bin.sh
+          cp "target/${{ matrix.target }}/release/attestack" /tmp/attestack-smoke
+          ATTESTACK_BIN=/tmp/attestack-smoke ./scripts/smoke-with-bin.sh
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            dist/${{ matrix.name }}.*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build MCP server
+        run: cargo build --release -p attestack-mcp

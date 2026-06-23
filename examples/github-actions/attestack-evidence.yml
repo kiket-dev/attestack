@@ -1,0 +1,45 @@
+name: Attestack CI evidence
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache cargo
+        uses: Swatinem/rust-cache@v2
+
+      - name: Build attestack
+        run: cargo build --release -p attestack-cli
+
+      - name: Record CI session
+        env:
+          PATH: ${{ github.workspace }}/target/release:${{ env.PATH }}
+        run: |
+          attestack ci start --json
+          attestack ci run -- cargo test --workspace
+          attestack ci finish --json
+
+      - name: Verify bundle
+        env:
+          PATH: ${{ github.workspace }}/target/release:${{ env.PATH }}
+        run: |
+          BUNDLE="$(ls .attestack/bundles/*.attestack.zip | tail -1)"
+          attestack verify "$BUNDLE" --json
+
+      - name: Upload evidence bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: attestack-evidence
+          path: .attestack/bundles/*.attestack.zip
+          if-no-files-found: error

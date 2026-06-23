@@ -1,0 +1,16 @@
+.attestack/runs/
+.attestack/tmp/
+.attestack/keys/
+target/
+dist/
+node_modules/
+.DS_Store
+*.log
+book/book/
+
+# Local planning notes (not published)
+/todo.md
+/docs/open-questions.md
+/docs/agent-implementation-plan.md
+/docs/roadmap.md
+/docs/agent-integrations.md

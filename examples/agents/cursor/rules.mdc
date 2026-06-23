@@ -1,0 +1,45 @@
+---
+description: Record Attestack evidence during AI-assisted work in this repository
+alwaysApply: true
+---
+
+# Attestack evidence
+
+This project uses [Attestack](https://kiket-dev.github.io/attestack/) for tamper-evident session records.
+
+## Before substantive work
+
+Confirm an Attestack session is open. If not, tell the user to run:
+
+```bash
+attestack start "short task title"
+```
+
+## During work
+
+Use Attestack MCP tools when available:
+
+- `attestack_status` — check the active session
+- `attestack_note` — record milestones or review notes
+- `attestack_agent_tool_call` — record significant tool use (hashes preferred over raw content)
+- `attestack_agent_decision` — record important decisions
+- `attestack_snapshot` — capture Git state after meaningful changes
+
+Run tests and builds through the shell with Attestack when possible:
+
+```bash
+attestack run -- npm test
+```
+
+## Privacy
+
+Do not store raw prompts or secrets in notes. Use content hashes for sensitive material.
+
+## When finished
+
+Remind the user:
+
+```bash
+attestack stop
+attestack bundle create
+```

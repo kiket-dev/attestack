@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "attestack": {
+      "command": "__ATTESTACK_MCP_BIN__",
+      "args": [],
+      "env": {
+        "ATTESTACK_REPO_ROOT": "__ATTESTACK_REPO_ROOT__"
+      }
+    }
+  }
+}

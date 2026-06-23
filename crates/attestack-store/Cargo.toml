@@ -1,0 +1,26 @@
+[package]
+name = "attestack-store"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "Local .attestack/ file store for Attestack sessions and events"
+
+[lints]
+workspace = true
+
+[dependencies]
+attestack-core = { path = "../attestack-core" }
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+time.workspace = true
+toml.workspace = true
+ed25519-dalek.workspace = true
+base64.workspace = true
+zip.workspace = true
+fs2.workspace = true
+tempfile.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

@@ -1,0 +1,25 @@
+[book]
+title = "Attestack"
+authors = ["Attestack Contributors"]
+description = "Local-first proof layer for AI-assisted software work"
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+create-missing = false
+
+[output.html]
+site-url = "/attestack/"
+git-repository-url = "https://github.com/kiket-dev/attestack"
+edit-url-template = "https://github.com/kiket-dev/attestack/edit/main/book/src/{path}"
+default-theme = "light"
+preferred-dark-theme = "navy"
+smart-punctuation = true
+additional-css = ["theme/custom.css"]
+no-section-label = true
+
+[output.html.search]
+enable = true
+limit-results = 30
+teaser-word-count = 30

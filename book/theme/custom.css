@@ -1,0 +1,479 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+
+:root {
+  --at-accent: #0d9488;
+  --at-accent-hover: #0f766e;
+  --at-accent-soft: rgba(13, 148, 136, 0.12);
+  --at-accent-glow: rgba(13, 148, 136, 0.25);
+  --at-surface: #ffffff;
+  --at-surface-2: #f4f7f8;
+  --at-border: rgba(15, 23, 42, 0.08);
+  --at-text: #0f172a;
+  --at-text-muted: #64748b;
+  --at-radius: 12px;
+  --at-radius-sm: 8px;
+  --at-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 8px 24px rgba(15, 23, 42, 0.06);
+  --at-font: "DM Sans", system-ui, -apple-system, sans-serif;
+  --at-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+.navy,
+.coal,
+.ayu {
+  --at-accent: #2dd4bf;
+  --at-accent-hover: #5eead4;
+  --at-accent-soft: rgba(45, 212, 191, 0.12);
+  --at-accent-glow: rgba(45, 212, 191, 0.18);
+  --at-surface: #111827;
+  --at-surface-2: #1e293b;
+  --at-border: rgba(248, 250, 252, 0.08);
+  --at-text: #f1f5f9;
+  --at-text-muted: #94a3b8;
+  --at-shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* ------------------------------------------------------------------ */
+/* Base typography                                                     */
+/* ------------------------------------------------------------------ */
+
+body {
+  font-family: var(--at-font);
+  letter-spacing: -0.01em;
+}
+
+.content main {
+  max-width: 52rem;
+}
+
+.content main h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.content main h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 2.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--at-border);
+}
+
+.content main h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+}
+
+.content main p,
+.content main li {
+  line-height: 1.7;
+  color: var(--at-text);
+}
+
+.content main a {
+  color: var(--at-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s ease;
+}
+
+.content main a:hover {
+  border-bottom-color: var(--at-accent);
+}
+
+.content main code {
+  font-family: var(--at-mono);
+  font-size: 0.88em;
+  padding: 0.15em 0.45em;
+  border-radius: 6px;
+  background: var(--at-accent-soft);
+  color: var(--at-accent);
+}
+
+.content main pre {
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  box-shadow: var(--at-shadow);
+  margin: 1.25rem 0;
+}
+
+.content main pre > code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Top bar & sidebar                                                   */
+/* ------------------------------------------------------------------ */
+
+#menu-bar {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--at-border);
+}
+
+#menu-bar .icon-button {
+  border-radius: var(--at-radius-sm);
+  transition: background 0.15s ease;
+}
+
+.chapter li.chapter-item a {
+  border-radius: var(--at-radius-sm);
+  padding: 0.35rem 0.65rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chapter li.chapter-item a.active {
+  background: var(--at-accent-soft);
+  color: var(--at-accent);
+  font-weight: 600;
+}
+
+.chapter .section li.chapter-item a {
+  padding-left: 1.25rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero (introduction page)                                            */
+/* ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  margin: -0.5rem -0.5rem 2.5rem;
+  padding: 2.75rem 2rem 2.5rem;
+  border-radius: calc(var(--at-radius) + 4px);
+  border: 1px solid var(--at-border);
+  background:
+    radial-gradient(ellipse 80% 60% at 100% 0%, var(--at-accent-glow), transparent 55%),
+    radial-gradient(ellipse 60% 50% at 0% 100%, var(--at-accent-soft), transparent 50%),
+    var(--at-surface-2);
+  overflow: hidden;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--at-accent);
+  background: var(--at-accent-soft);
+  border-radius: 999px;
+}
+
+.hero-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  color: var(--at-text);
+}
+
+.hero-lead {
+  margin: 0 0 1.5rem;
+  max-width: 38rem;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--at-text-muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1.1rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border-radius: var(--at-radius-sm);
+  text-decoration: none;
+  border: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-1px);
+}
+
+.hero-btn-primary {
+  color: #fff;
+  background: var(--at-accent);
+  box-shadow: 0 4px 14px var(--at-accent-glow);
+}
+
+.hero-btn-primary:hover {
+  background: var(--at-accent-hover);
+  border-bottom-color: transparent;
+}
+
+.hero-btn-secondary {
+  color: var(--at-text);
+  background: var(--at-surface);
+  border: 1px solid var(--at-border);
+}
+
+.hero-btn-secondary:hover {
+  border-bottom-color: transparent;
+  box-shadow: var(--at-shadow);
+}
+
+/* ------------------------------------------------------------------ */
+/* Feature grid                                                        */
+/* ------------------------------------------------------------------ */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.feature-card {
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  background: var(--at-surface);
+  box-shadow: var(--at-shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(15, 23, 42, 0.04), 0 16px 40px rgba(15, 23, 42, 0.08);
+}
+
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
+  border-radius: var(--at-radius-sm);
+  background: var(--at-accent-soft);
+}
+
+.feature-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  padding: 0;
+}
+
+.feature-card p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--at-text-muted);
+  line-height: 1.55;
+}
+
+/* ------------------------------------------------------------------ */
+/* Workflow strip                                                      */
+/* ------------------------------------------------------------------ */
+
+.workflow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  list-style: none;
+}
+
+.workflow li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--at-mono);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--at-text);
+  background: var(--at-surface-2);
+  border: 1px solid var(--at-border);
+  border-radius: 999px;
+}
+
+.workflow li::after {
+  content: "→";
+  margin-left: 0.25rem;
+  color: var(--at-text-muted);
+  font-family: var(--at-font);
+}
+
+.workflow li:last-child::after {
+  content: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Step cards (quickstart)                                             */
+/* ------------------------------------------------------------------ */
+
+.steps {
+  counter-reset: step;
+  margin: 2rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps > li {
+  position: relative;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.35rem 1.25rem 3.5rem;
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  background: var(--at-surface);
+  box-shadow: var(--at-shadow);
+}
+
+.steps > li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 1.15rem;
+  top: 1.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--at-accent);
+  border-radius: 999px;
+}
+
+.steps > li h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  border: none;
+  padding: 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Admonitions (mdBook 0.5)                                            */
+/* ------------------------------------------------------------------ */
+
+blockquote.blockquote-tag {
+  border-radius: var(--at-radius-sm);
+  border: 1px solid var(--at-border);
+  border-left-width: 4px;
+  padding: 0.85rem 1rem;
+  margin: 1.25rem 0;
+  background: var(--at-surface-2);
+}
+
+blockquote.blockquote-tag .blockquote-tag-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.35rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+blockquote.blockquote-tag p:last-child {
+  margin-bottom: 0;
+}
+
+blockquote.blockquote-tag-note {
+  border-left-color: #3b82f6;
+}
+
+blockquote.blockquote-tag-tip {
+  border-left-color: var(--at-accent);
+}
+
+blockquote.blockquote-tag-warning {
+  border-left-color: #f59e0b;
+}
+
+blockquote.blockquote-tag-caution {
+  border-left-color: #ef4444;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tables                                                              */
+/* ------------------------------------------------------------------ */
+
+.content main table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1.5rem 0;
+  font-size: 0.9375rem;
+  border: 1px solid var(--at-border);
+  border-radius: var(--at-radius);
+  overflow: hidden;
+  box-shadow: var(--at-shadow);
+}
+
+.content main table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  background: var(--at-surface-2);
+  border-bottom: 1px solid var(--at-border);
+}
+
+.content main table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--at-border);
+}
+
+.content main table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Search results                                                      */
+/* ------------------------------------------------------------------ */
+
+#searchresults li {
+  border-radius: var(--at-radius-sm);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                          */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 2rem 1.25rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+  }
+
+  .hero-btn {
+    justify-content: center;
+  }
+
+  .workflow li::after {
+    display: none;
+  }
+}

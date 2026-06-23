@@ -1,0 +1,24 @@
+[package]
+name = "attestack-mcp"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+description = "MCP server adapter for Attestack agent integrations"
+default-run = "attestack-mcp"
+
+[lints]
+workspace = true
+
+[[bin]]
+name = "attestack-mcp"
+path = "src/main.rs"
+
+[dependencies]
+attestack-core = { path = "../attestack-core" }
+attestack-store = { path = "../attestack-store" }
+serde.workspace = true
+serde_json.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
