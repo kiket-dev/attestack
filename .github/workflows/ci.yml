@@ -110,11 +110,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install mdBook
-        run: |
-          curl -fsSL https://github.com/rust-lang/mdBook/releases/download/v0.4.40/mdbook-v0.4.40-x86_64-unknown-linux-gnu.tar.gz \
-            | tar -xz
-          echo "$PWD" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
 
-      - name: Build docs
-        run: mdbook build book
+      - name: Sync markdown from docs/
+        run: node site/scripts/sync-content.mjs
+
+      - name: Build docs site
+        working-directory: site
+        run: npm ci && npm run build
