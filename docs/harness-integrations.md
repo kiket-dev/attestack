@@ -65,7 +65,7 @@ attestack run -- npm test          # optional: record subprocess steps
 
 OpenHands and Aider include `run-with-evidence.sh` wrappers you can copy or call from your project root.
 
-## Dogfood in an existing project
+## Production use in your repo
 
 Merge Attestack MCP into an existing Cursor config (keeps your other MCP servers):
 
@@ -73,7 +73,7 @@ Merge Attestack MCP into an existing Cursor config (keeps your other MCP servers
 /path/to/attestack/scripts/dogfood-agent.sh --merge cursor
 ```
 
-Run from your project git root (e.g. `~/src/kiket2`). Adds `.attestack/` to `.gitignore` when missing.
+Add project scripts for daily use — see [Kiket's `evidence-session.sh`](https://github.com/kiket-dev/kiket2/blob/main/scripts/evidence-session.sh) and `pnpm evidence:*` wrappers as a reference implementation.
 
 ## CI entrypoints
 

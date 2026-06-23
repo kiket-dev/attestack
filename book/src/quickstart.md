@@ -21,6 +21,13 @@ curl -fsSL https://raw.githubusercontent.com/kiket-dev/attestack/main/scripts/in
 
 See the [Installation guide](installation.md) for manual downloads or building from source.
 
+<figure class="demo-gif-frame">
+<img class="demo-gif" src="img/quickstart-demo.gif" alt="Terminal demo of a full Attestack session from init through verify" />
+<figcaption>End-to-end session: init → start → record → bundle → verify.</figcaption>
+</figure>
+
+Regenerate locally: `./scripts/render-demos.sh` (requires [VHS](https://github.com/charmbracelet/vhs)).
+
 ## Walkthrough
 
 <ol class="steps">

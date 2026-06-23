@@ -52,6 +52,16 @@ Attestack adds a **local proof layer** on top of your normal workflow:
 <figcaption>Each event links to the previous hash; tampering breaks verification.</figcaption>
 </figure>
 
+<figure class="diagram-frame diagram-animated">
+<img class="diagram-img" src="img/session-loop.svg" alt="Animated loop: start session, record work, export bundle, verify offline" />
+<figcaption>Every feature branch can follow the same evidence loop.</figcaption>
+</figure>
+
+<figure class="demo-gif-frame">
+<img class="demo-gif" src="img/quickstart-demo.gif" alt="Terminal recording: attestack init, start, run, note, stop, bundle create, and verify" />
+<figcaption>Quickstart in under a minute — real CLI output.</figcaption>
+</figure>
+
 > [!NOTE]
 > Attestack records **what happened**, not whether code is correct or secure. It is evidence tooling — not a substitute for review, testing, or static analysis.
 

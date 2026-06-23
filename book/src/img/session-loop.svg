@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200" role="img" aria-labelledby="session-loop-title">
+  <title id="session-loop-title">Attestack session loop: start, record, export, verify</title>
+  <defs>
+    <linearGradient id="loop-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#2dd4bf"/>
+    </linearGradient>
+    <filter id="loop-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0d9488" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <style>
+    .box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; }
+    .box-text { fill: #0f172a; font: 600 13px "DM Sans", system-ui, sans-serif; }
+    .sub { fill: #64748b; font: 400 11px "DM Sans", system-ui, sans-serif; }
+    .arrow { stroke: url(#loop-accent); stroke-width: 2.5; fill: none; marker-end: url(#arrowhead); }
+    .pulse {
+      fill: #0d9488;
+      opacity: 0;
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 0; transform: translateX(0); }
+      10% { opacity: 1; }
+      50% { opacity: 1; transform: translateX(520px); }
+      60%, 100% { opacity: 0; transform: translateX(520px); }
+    }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #1e293b; stroke: #334155; }
+      .box-text { fill: #f1f5f9; }
+      .sub { fill: #94a3b8; }
+    }
+  </style>
+  <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+    <polygon points="0 0, 8 4, 0 8" fill="#0d9488"/>
+  </marker>
+  <!-- boxes -->
+  <rect class="box" x="20" y="60" width="130" height="72" rx="10" filter="url(#loop-glow)"/>
+  <text class="box-text" x="85" y="92" text-anchor="middle">start</text>
+  <text class="sub" x="85" y="112" text-anchor="middle">open session</text>
+
+  <rect class="box" x="190" y="60" width="130" height="72" rx="10"/>
+  <text class="box-text" x="255" y="92" text-anchor="middle">record</text>
+  <text class="sub" x="255" y="112" text-anchor="middle">run · note · agent</text>
+
+  <rect class="box" x="360" y="60" width="130" height="72" rx="10"/>
+  <text class="box-text" x="425" y="92" text-anchor="middle">export</text>
+  <text class="sub" x="425" y="112" text-anchor="middle">signed bundle</text>
+
+  <rect class="box" x="530" y="60" width="130" height="72" rx="10" filter="url(#loop-glow)"/>
+  <text class="box-text" x="595" y="92" text-anchor="middle">verify</text>
+  <text class="sub" x="595" y="112" text-anchor="middle">offline · strict</text>
+
+  <!-- arrows -->
+  <path class="arrow" d="M 150 96 H 185"/>
+  <path class="arrow" d="M 320 96 H 355"/>
+  <path class="arrow" d="M 490 96 H 525"/>
+
+  <!-- animated pulse along path -->
+  <circle class="pulse" cx="150" cy="96" r="5"/>
+</svg>
