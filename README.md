@@ -48,9 +48,7 @@ attestack verify .attestack/bundles/fix-billing-webhook.attestack.zip
 curl -fsSL https://raw.githubusercontent.com/kiket-dev/attestack/main/scripts/install.sh | bash
 ```
 
-For private repositories, run `gh auth login` first — the install script falls back to GitHub CLI for authenticated downloads.
-
-**Agent setup:** `./scripts/setup-agent.sh cursor --with-rules` — see the [agent setup guide](docs/agent-setup.md).
+**Agent setup:** `./scripts/setup-agent.sh cursor --with-rules` — see the [agent setup guide](https://kiket-dev.github.io/attestack/agent-setup.html).
 
 **Maintainers:** `./scripts/release-check.sh` — see [docs/releasing.md](docs/releasing.md).
 
