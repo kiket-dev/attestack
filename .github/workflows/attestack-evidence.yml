@@ -23,24 +23,21 @@ jobs:
         run: cargo build --release -p attestack-cli
 
       - name: Record CI session
-        env:
-          PATH: ${{ github.workspace }}/target/release:${{ env.PATH }}
         run: |
+          export PATH="${{ github.workspace }}/target/release:$PATH"
           attestack ci start --json
           attestack ci run -- cargo test --workspace
           attestack ci finish --json
 
       - name: Verify bundle
-        env:
-          PATH: ${{ github.workspace }}/target/release:${{ env.PATH }}
         run: |
+          export PATH="${{ github.workspace }}/target/release:$PATH"
           BUNDLE="$(ls .attestack/bundles/*.attestack.zip | tail -1)"
           attestack verify "$BUNDLE" --json
 
       - name: PR summary preview
-        env:
-          PATH: ${{ github.workspace }}/target/release:${{ env.PATH }}
         run: |
+          export PATH="${{ github.workspace }}/target/release:$PATH"
           BUNDLE="$(ls .attestack/bundles/*.attestack.zip | tail -1)"
           attestack pr-summary --bundle "$BUNDLE"
 
