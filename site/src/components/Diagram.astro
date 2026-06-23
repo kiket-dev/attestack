@@ -1,9 +1,6 @@
 ---
-import type { ImageMetadata } from 'astro';
-import { Image } from 'astro:assets';
-
 interface Props {
-  src: ImageMetadata;
+  src: string;
   alt: string;
   caption?: string;
 }
@@ -12,6 +9,15 @@ const { src, alt, caption } = Astro.props;
 ---
 
 <figure class="diagram-frame">
-  <Image src={src} alt={alt} />
+  <div class="diagram-inline" role="img" aria-label={alt} set:html={src} />
   {caption && <figcaption class="diagram-caption">{caption}</figcaption>}
 </figure>
+
+<style>
+  .diagram-inline :global(svg) {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--at-radius, 14px);
+  }
+</style>

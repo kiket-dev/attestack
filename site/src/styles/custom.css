@@ -386,6 +386,7 @@
   margin: 1.25rem 0 0;
 }
 
+.diagram-frame .diagram-inline svg,
 .diagram-frame img {
   width: 100%;
   height: auto;

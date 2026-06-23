@@ -1,54 +1,68 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 280" role="img" aria-label="Evidence scattered across tools">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Evidence scattered across tools">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fafc"/>
-      <stop offset="100%" stop-color="#f1f5f9"/>
-    </linearGradient>
-    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.08"/>
+    <filter id="scatter-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000" flood-opacity="0.35"/>
     </filter>
   </defs>
-  <rect width="720" height="280" rx="16" fill="url(#bg)" stroke="#e2e8f0"/>
-  <text x="360" y="36" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#64748b">Today: evidence is everywhere except one verifiable record</text>
-  <!-- scattered nodes -->
-  <g filter="url(#shadow)">
-    <rect x="48" y="72" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="108" y="98" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">Git history</text>
-    <text x="108" y="116" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">commits only</text>
 
-    <rect x="200" y="56" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="260" y="82" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">CI logs</text>
-    <text x="260" y="100" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">ephemeral</text>
+  <rect width="720" height="300" rx="16" fill="#121820" stroke="#2a3544"/>
+  <text x="360" y="34" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#8b9cb3">
+    Today: evidence is everywhere except one verifiable record
+  </text>
 
-    <rect x="352" y="88" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="412" y="114" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">AI chat</text>
-    <text x="412" y="132" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">not portable</text>
+  <!-- nodes -->
+  <g filter="url(#scatter-shadow)" font-family="system-ui,sans-serif">
+    <rect x="56" y="68" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="112" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">Git history</text>
+    <text x="112" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">commits only</text>
 
-    <rect x="504" y="64" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="564" y="90" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">Terminal</text>
-    <text x="564" y="108" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">lost</text>
+    <rect x="208" y="52" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="264" y="76" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">CI logs</text>
+    <text x="264" y="92" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">ephemeral</text>
 
-    <rect x="128" y="168" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="188" y="194" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">PR comments</text>
-    <text x="188" y="212" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">informal</text>
+    <rect x="360" y="84" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="416" y="108" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">AI chat</text>
+    <text x="416" y="124" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">not portable</text>
 
-    <rect x="296" y="184" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="356" y="210" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">Memory</text>
-    <text x="356" y="228" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">untrusted</text>
+    <rect x="512" y="60" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="568" y="84" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">Terminal</text>
+    <text x="568" y="100" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">lost</text>
 
-    <rect x="464" y="160" width="120" height="56" rx="10" fill="#fff" stroke="#cbd5e1"/>
-    <text x="524" y="186" text-anchor="middle" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#334155">Screenshots</text>
-    <text x="524" y="204" text-anchor="middle" font-family="ui-monospace,monospace" font-size="10" fill="#94a3b8">unverifiable</text>
+    <rect x="128" y="176" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="184" y="200" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">PR comments</text>
+    <text x="184" y="216" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">informal</text>
+
+    <rect x="304" y="192" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="360" y="216" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">Memory</text>
+    <text x="360" y="232" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">untrusted</text>
+
+    <rect x="480" y="168" width="112" height="52" rx="10" fill="#1e293b" stroke="#334155"/>
+    <text x="536" y="192" text-anchor="middle" font-size="12" font-weight="600" fill="#e6edf3">Screenshots</text>
+    <text x="536" y="208" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#5a6b82">unverifiable</text>
   </g>
-  <!-- dashed connectors -->
-  <g stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="5 4" fill="none" opacity="0.7">
-    <path d="M168 100 L240 84"/>
-    <path d="M320 84 L352 110"/>
-    <path d="M472 92 L504 88"/>
-    <path d="M188 168 L260 112"/>
-    <path d="M412 144 L356 184"/>
-    <path d="M524 160 L464 200"/>
-    <path d="M248 200 L320 210"/>
+
+  <!-- dashed wires: each source points toward center but stops short (fragmented) -->
+  <g stroke="#5a6b82" stroke-width="1.5" stroke-dasharray="6 5" fill="none" opacity="0.85">
+    <path d="M112 120 L112 148"/>
+    <path d="M264 104 L264 132"/>
+    <path d="M416 136 L416 158"/>
+    <path d="M568 112 L568 140"/>
+    <path d="M184 228 L184 250"/>
+    <path d="M360 244 L360 262"/>
+    <path d="M536 220 L536 242"/>
+    <!-- cross-links that miss a unified hub -->
+    <path d="M168 94 L208 78"/>
+    <path d="M320 78 L360 100"/>
+    <path d="M472 86 L512 78"/>
+    <path d="M240 176 L304 200"/>
+    <path d="M416 200 L480 188"/>
   </g>
-  <text x="360" y="262" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#ef4444" font-weight="600">No single tamper-evident timeline</text>
+
+  <!-- empty center gap = no unified record -->
+  <circle cx="360" cy="158" r="22" fill="none" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.8"/>
+  <text x="360" y="163" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#f87171">?</text>
+
+  <text x="360" y="286" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#f87171" font-weight="600">
+    No single tamper-evident timeline
+  </text>
 </svg>
