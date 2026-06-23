@@ -51,6 +51,10 @@ echo "==> LangGraph harness smoke"
 ./scripts/harness-langgraph-smoke.sh
 
 echo ""
+echo "==> Inspect AI harness smoke"
+./scripts/harness-inspect-ai-smoke.sh
+
+echo ""
 echo "==> mdBook build"
 if command -v mdbook >/dev/null 2>&1; then
   mdbook build book

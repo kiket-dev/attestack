@@ -1,6 +1,6 @@
 # Harness integrations
 
-Orchestration frameworks (LangGraph, eval runners, shell agents) integrate with Attestack via **callback adapters** or **session wrappers**. Editor agents (Cursor, Claude Code) should use [Agent setup](agent-setup.md) and MCP instead.
+Orchestration frameworks (LangGraph, Inspect AI, eval runners, shell agents) integrate with Attestack via **callback adapters** or **session wrappers**. Editor agents (Cursor, Claude Code) should use [Agent setup](agent-setup.md) and MCP instead.
 
 ## Callback adapter (LangGraph)
 
@@ -34,6 +34,19 @@ cd examples/harnesses/langgraph
 attestack verify .attestack/bundles/*.attestack.zip --strict
 ```
 
+## Callback adapter (Inspect AI)
+
+Inspect AI hooks (`on_sample_event`, `on_run_start`, `on_run_end`) map completed tool/model events to Attestack. Uses `mockllm/model` in the demo — no API key.
+
+**Example:** [`examples/harnesses/inspect-ai/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/inspect-ai)
+
+```bash
+cd examples/harnesses/inspect-ai
+./run_demo.sh
+```
+
+Import your hooks module from the task file so `@hooks` registers before `inspect eval` runs.
+
 ## Session wrapper (OpenHands, Aider, eval runners)
 
 Any harness that runs shell commands can wrap a session without code changes to Attestack:
@@ -52,11 +65,21 @@ attestack run -- npm test          # optional: record subprocess steps
 
 OpenHands and Aider include `run-with-evidence.sh` wrappers you can copy or call from your project root.
 
+## Dogfood in an existing project
+
+Merge Attestack MCP into an existing Cursor config (keeps your other MCP servers):
+
+```bash
+/path/to/attestack/scripts/dogfood-agent.sh --merge cursor
+```
+
+Run from your project git root (e.g. `~/src/kiket2`). Adds `.attestack/` to `.gitignore` when missing.
+
 ## CI entrypoints
 
 GitHub Actions, Dagger, Earthly, and Nix: see [CI integration](ci-integration.md) and `examples/github-actions/`.
 
-Pull requests on GitHub get an automated evidence summary comment when the CI evidence workflow runs (see `.github/workflows/attestack-evidence.yml`).
+Pull requests on GitHub get an automated evidence summary comment when the CI evidence workflow runs.
 
 ## Verify
 

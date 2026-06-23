@@ -6,6 +6,7 @@ EXAMPLES="$ROOT/examples/agents"
 FORCE=0
 INIT_ONLY=0
 WITH_RULES=0
+MERGE=0
 AGENTS=()
 
 usage() {
@@ -26,12 +27,14 @@ Agents:
 
 Options:
   --force         Overwrite existing config files
+  --merge         Merge into existing Cursor MCP config (cursor only)
   --with-rules    Install Cursor / Copilot instruction files
   --init-only     Only build MCP + run attestack init (no agent config)
   -h, --help      Show this help
 
 Examples:
   ./scripts/setup-agent.sh cursor
+  ./scripts/setup-agent.sh cursor --merge --with-rules
   ./scripts/setup-agent.sh cursor claude-code --with-rules
   ./scripts/setup-agent.sh all --force
 EOF
@@ -44,6 +47,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     -h | --help) usage; exit 0 ;;
     --force) FORCE=1; shift ;;
+    --merge) MERGE=1; shift ;;
     --with-rules) WITH_RULES=1; shift ;;
     --init-only) INIT_ONLY=1; shift ;;
     cursor | claude-code | claude-desktop | windsurf | cline | opencode | copilot | all)
@@ -131,6 +135,33 @@ render_mcp_json() {
   log "Wrote $dest"
 }
 
+merge_cursor_mcp() {
+  local dest="$1"
+  local mcp_bin="$2"
+  if [[ ! -f "$dest" ]]; then
+    render_mcp_json "$EXAMPLES/cursor/mcp.json" "$dest" "$mcp_bin" ""
+    return
+  fi
+  PROJECT_ROOT="$PROJECT_ROOT" MCP_BIN="$mcp_bin" python3 <<'PY'
+import json
+import os
+from pathlib import Path
+
+dest = Path(os.environ["PROJECT_ROOT"]) / ".cursor" / "mcp.json"
+mcp_bin = os.environ["MCP_BIN"]
+data = json.loads(dest.read_text(encoding="utf-8"))
+servers = data.setdefault("mcpServers", {})
+servers["attestack"] = {
+    "command": mcp_bin,
+    "args": [],
+    "env": {"ATTESTACK_REPO_ROOT": "${workspaceFolder}"},
+}
+dest.write_text(json.dumps(data, indent=2) + "\n", encoding="utf-8")
+print(dest)
+PY
+  log "Merged attestack into $dest"
+}
+
 PROJECT_ROOT="$(pwd)"
 MCP_BIN="$(resolve_mcp)"
 ATTESTACK_BIN="$(resolve_attestack)"
@@ -155,7 +186,11 @@ if [[ "$INIT_ONLY" -eq 1 ]]; then
 fi
 
 setup_cursor() {
-  render_mcp_json "$EXAMPLES/cursor/mcp.json" "$PROJECT_ROOT/.cursor/mcp.json" "$MCP_BIN" ""
+  if [[ "$MERGE" -eq 1 ]]; then
+    merge_cursor_mcp "$PROJECT_ROOT/.cursor/mcp.json" "$MCP_BIN"
+  else
+    render_mcp_json "$EXAMPLES/cursor/mcp.json" "$PROJECT_ROOT/.cursor/mcp.json" "$MCP_BIN" ""
+  fi
   if [[ "$WITH_RULES" -eq 1 ]]; then
     write_file "$PROJECT_ROOT/.cursor/rules/attestack.mdc" "$EXAMPLES/cursor/rules.mdc" || true
   fi
