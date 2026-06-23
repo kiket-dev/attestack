@@ -4,7 +4,9 @@
 /* Design tokens                                                       */
 /* ------------------------------------------------------------------ */
 
-:root {
+:root,
+.rust,
+.light {
   --at-accent: #0d9488;
   --at-accent-hover: #0f766e;
   --at-accent-soft: rgba(13, 148, 136, 0.12);
@@ -47,6 +49,14 @@ body {
 
 .content main {
   max-width: 52rem;
+}
+
+.home-page {
+  margin-bottom: 2rem;
+}
+
+.home-page > h2:first-of-type {
+  margin-top: 0;
 }
 
 .content main h1 {
@@ -118,6 +128,15 @@ body {
 #menu-bar {
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--at-border);
+  background: color-mix(in srgb, var(--at-surface) 88%, transparent);
+}
+
+.sidebar {
+  border-right: 1px solid var(--at-border);
+}
+
+.sidebar-scrollbox {
+  background: var(--at-surface-2);
 }
 
 #menu-bar .icon-button {
@@ -476,4 +495,198 @@ blockquote.blockquote-tag-caution {
   .workflow li::after {
     display: none;
   }
+
+  .compare-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .use-case-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Diagrams                                                            */
+/* ------------------------------------------------------------------ */
+
+.diagram-frame {
+  margin: 1.75rem 0 2.25rem;
+  padding: 0;
+  border: none;
+}
+
+.diagram-frame img,
+.diagram-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  box-shadow: var(--at-shadow);
+  background: var(--at-surface);
+}
+
+.diagram-frame figcaption {
+  margin-top: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--at-text-muted);
+  text-align: center;
+  font-style: italic;
+}
+
+.navy .diagram-img,
+.coal .diagram-img,
+.ayu .diagram-img {
+  filter: brightness(0.92) saturate(0.95);
+}
+
+/* ------------------------------------------------------------------ */
+/* Use case cards (home)                                               */
+/* ------------------------------------------------------------------ */
+
+.use-case-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.use-case-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  background: var(--at-surface);
+  box-shadow: var(--at-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.use-case-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--at-accent);
+  box-shadow: 0 8px 28px var(--at-accent-glow);
+}
+
+.use-case-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--at-text);
+  border: none;
+  padding: 0;
+}
+
+.use-case-card p {
+  margin: 0 0 0.75rem;
+  flex: 1;
+  font-size: 0.9375rem;
+  color: var(--at-text-muted);
+  line-height: 1.55;
+}
+
+.use-case-card .use-case-link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--at-accent);
+}
+
+.use-case-card:hover .use-case-link {
+  border-bottom: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Before / after comparison                                           */
+/* ------------------------------------------------------------------ */
+
+.compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.compare-card {
+  padding: 1.25rem 1.35rem;
+  border-radius: var(--at-radius);
+  border: 1px solid var(--at-border);
+  background: var(--at-surface);
+  box-shadow: var(--at-shadow);
+}
+
+.compare-card h3 {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  padding: 0;
+}
+
+.compare-card ul {
+  margin: 0;
+  padding-left: 1.15rem;
+}
+
+.compare-card li {
+  margin-bottom: 0.45rem;
+  font-size: 0.9375rem;
+  color: var(--at-text-muted);
+}
+
+.compare-before {
+  border-left: 4px solid #f59e0b;
+}
+
+.compare-after {
+  border-left: 4px solid var(--at-accent);
+}
+
+/* ------------------------------------------------------------------ */
+/* Bottom nav cards                                                    */
+/* ------------------------------------------------------------------ */
+
+.nav-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.15rem;
+  border-radius: var(--at-radius-sm);
+  border: 1px solid var(--at-border);
+  background: var(--at-surface-2);
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-card:hover {
+  background: var(--at-accent-soft);
+  border-color: var(--at-accent);
+  border-bottom-color: var(--at-accent);
+}
+
+.nav-card strong {
+  font-size: 0.9375rem;
+  color: var(--at-text);
+}
+
+.nav-card span {
+  font-size: 0.8125rem;
+  color: var(--at-text-muted);
+}
+
+/* ------------------------------------------------------------------ */
+/* Home page table                                                      */
+/* ------------------------------------------------------------------ */
+
+.home-page table th:first-child {
+  width: 42%;
 }

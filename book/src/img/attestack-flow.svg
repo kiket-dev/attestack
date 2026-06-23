@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" role="img" aria-label="Attestack session to bundle flow">
+  <defs>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0d9488"/>
+      <stop offset="100%" stop-color="#14b8a6"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#0d9488"/>
+    </marker>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0d9488" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="200" rx="16" fill="#f8fafc" stroke="#e2e8f0"/>
+  <g font-family="system-ui,sans-serif">
+    <!-- steps -->
+    <g filter="url(#glow)">
+      <rect x="24" y="64" width="100" height="72" rx="12" fill="#fff" stroke="#99f6e4" stroke-width="2"/>
+      <text x="74" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">start</text>
+      <text x="74" y="112" text-anchor="middle" font-size="10" fill="#64748b">open session</text>
+    </g>
+    <g filter="url(#glow)">
+      <rect x="148" y="64" width="100" height="72" rx="12" fill="#fff" stroke="#99f6e4" stroke-width="2"/>
+      <text x="198" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">run</text>
+      <text x="198" y="112" text-anchor="middle" font-size="10" fill="#64748b">commands</text>
+    </g>
+    <g filter="url(#glow)">
+      <rect x="272" y="64" width="100" height="72" rx="12" fill="#fff" stroke="#99f6e4" stroke-width="2"/>
+      <text x="322" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">note</text>
+      <text x="322" y="112" text-anchor="middle" font-size="10" fill="#64748b">human context</text>
+    </g>
+    <g filter="url(#glow)">
+      <rect x="396" y="64" width="100" height="72" rx="12" fill="#fff" stroke="#99f6e4" stroke-width="2"/>
+      <text x="446" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">agent</text>
+      <text x="446" y="112" text-anchor="middle" font-size="10" fill="#64748b">tool calls</text>
+    </g>
+    <g filter="url(#glow)">
+      <rect x="520" y="64" width="100" height="72" rx="12" fill="#fff" stroke="#99f6e4" stroke-width="2"/>
+      <text x="570" y="92" text-anchor="middle" font-size="12" font-weight="700" fill="#0f766e">stop</text>
+      <text x="570" y="112" text-anchor="middle" font-size="10" fill="#64748b">seal log</text>
+    </g>
+    <rect x="644" y="56" width="132" height="88" rx="12" fill="url(#accent)"/>
+    <text x="710" y="92" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">bundle.zip</text>
+    <text x="710" y="112" text-anchor="middle" font-size="10" fill="#ccfbf1">signed export</text>
+    <text x="710" y="130" text-anchor="middle" font-size="10" fill="#ccfbf1">verify offline</text>
+  </g>
+  <!-- arrows -->
+  <g stroke="#0d9488" stroke-width="2" marker-end="url(#arrow)" fill="none">
+    <path d="M124 100 L148 100"/>
+    <path d="M248 100 L272 100"/>
+    <path d="M372 100 L396 100"/>
+    <path d="M496 100 L520 100"/>
+    <path d="M620 100 L644 100"/>
+  </g>
+  <!-- store bar -->
+  <rect x="48" y="156" width="704" height="28" rx="8" fill="#ecfdf5" stroke="#a7f3d0"/>
+  <text x="400" y="175" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="#0f766e">.attestack/sessions/&/events.jsonl    hash-chained append-only log</text>
+  <text x="400" y="36" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="#334155">One session, one verifiable timeline</text>
+</svg>

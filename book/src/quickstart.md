@@ -9,23 +9,17 @@ Record your first Attestack session in a few minutes.
 
 | Requirement | Notes |
 |-------------|-------|
-| Shell | Linux or macOS today; Windows support is planned |
+| Shell | Linux, macOS, or Windows |
 | [Git](https://git-scm.com/) | Required for `snapshot`; recommended for real projects |
-| [Rust](https://rustup.rs/) | Stable toolchain — build from source until crates.io publish |
+| Rust (optional) | Only if building from source |
 
 ## Install
 
-See the [Installation guide](installation.md) for release binaries, `scripts/install.sh`, or building from source.
-
-Attestack is not on crates.io yet. Clone and build the CLI:
-
 ```bash
-git clone https://github.com/kiket-dev/attestack.git
-cd attestack
-cargo build --release -p attestack-cli
-export PATH="$PWD/target/release:$PATH"
-attestack --help
+curl -fsSL https://raw.githubusercontent.com/kiket-dev/attestack/main/scripts/install.sh | bash
 ```
+
+See the [Installation guide](installation.md) for manual downloads or building from source.
 
 ## Walkthrough
 
