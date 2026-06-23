@@ -1,6 +1,6 @@
 # Contributing to Attestack
 
-Thank you for helping improve Attestack. This file summarizes how to get started; the full guide lives in [docs/contributing.md](docs/contributing.md) and on the [documentation site](https://kiket-dev.github.io/attestack/contributing.html).
+Thank you for helping improve Attestack. This file summarizes how to get started; the full guide lives in [docs/contributing.md](docs/contributing.md) and on the [documentation site](https://kiket-dev.github.io/attestack/project/contributing/).
 
 ## Development setup
 
@@ -23,8 +23,7 @@ Before opening a pull request, ensure:
 
 - `./scripts/check.sh` passes (fmt, clippy, tests)
 - New behavior has integration or unit tests where practical
-- Public docs in `docs/` are updated when user-facing behavior changes
-- mdBook builds: `mdbook build book`
+- Public docs in `docs/` are updated when user-facing behavior changes; run `node site/scripts/sync-content.mjs` and verify with `cd site && npm run build`
 
 ## Pull requests
 

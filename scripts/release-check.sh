@@ -55,11 +55,11 @@ echo "==> Inspect AI harness smoke"
 ./scripts/harness-inspect-ai-smoke.sh
 
 echo ""
-echo "==> mdBook build"
-if command -v mdbook >/dev/null 2>&1; then
-  mdbook build book
+echo "==> Docs site build"
+if command -v node >/dev/null 2>&1; then
+  ./scripts/build-docs.sh
 else
-  echo "warning: mdbook not installed; skipping docs build (CI will build on push)"
+  echo "warning: node not installed; skipping docs build (CI will build on push)"
 fi
 
 echo ""

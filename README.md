@@ -40,7 +40,7 @@ attestack verify .attestack/bundles/fix-billing-webhook.attestack.zip
 
 ## Documentation
 
-**Public docs:** [kiket-dev.github.io/attestack](https://kiket-dev.github.io/attestack/) (built from `book/` with [mdBook](https://rust-lang.github.io/mdBook/), deployed via GitHub Pages).
+**Public docs:** [kiket-dev.github.io/attestack](https://kiket-dev.github.io/attestack/) (built from `site/` with [Astro Starlight](https://starlight.astro.build/), deployed via GitHub Pages).
 
 **Install:**
 
@@ -55,9 +55,8 @@ curl -fsSL https://raw.githubusercontent.com/kiket-dev/attestack/main/scripts/in
 Source material lives in `docs/` and is included into the published site. To preview locally:
 
 ```bash
-cargo install mdbook   # once
-./scripts/build-docs.sh
-# or: mdbook serve book
+cd site && npm ci && npm run dev
+# or: ./scripts/build-docs.sh && cd site && npm run preview
 ```
 
 ## Non-goals

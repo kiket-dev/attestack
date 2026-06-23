@@ -7,7 +7,9 @@ dist/
 node_modules/
 .DS_Store
 *.log
-book/book/
+site/node_modules/
+site/dist/
+book/
 
 # Local planning notes (not published)
 /todo.md

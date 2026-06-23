@@ -1,0 +1,36 @@
+---
+const base = import.meta.env.BASE_URL;
+
+const personas = [
+  {
+    href: `${base}integrations/agent-setup/`,
+    title: 'Cursor & MCP',
+    body: 'Connect attestack-mcp so agents record tool calls during a session.',
+    cta: 'Agent setup →',
+  },
+  {
+    href: `${base}integrations/ci/`,
+    title: 'CI pipelines',
+    body: 'Wrap tests in a session and upload signed bundles as workflow artifacts.',
+    cta: 'CI integration →',
+  },
+  {
+    href: `${base}getting-started/use-cases/#tech-lead-reviewing-ai-assisted-changes`,
+    title: 'Review bundles',
+    body: 'Verify signatures and hash chains offline before reading the report.',
+    cta: 'Review workflow →',
+  },
+];
+---
+
+<div class="persona-grid">
+  {
+    personas.map((p) => (
+      <a class="persona-card" href={p.href}>
+        <strong>{p.title}</strong>
+        <span>{p.body}</span>
+        <em>{p.cta}</em>
+      </a>
+    ))
+  }
+</div>

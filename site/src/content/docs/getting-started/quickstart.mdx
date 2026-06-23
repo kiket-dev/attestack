@@ -1,0 +1,118 @@
+---
+title: Quick start
+description: Record your first Attestack session in five minutes.
+---
+
+import DemoGif from '../../../components/DemoGif.astro';
+import quickstartGif from '../../../assets/img/quickstart-demo.gif';
+
+Record your first Attestack session in a few minutes.
+
+:::tip
+Run `attestack doctor` anytime to check store initialization, signing identity, Git availability, and active session health.
+:::
+
+## Prerequisites
+
+| Requirement | Notes |
+| --- | --- |
+| Shell | Linux, macOS, or Windows |
+| [Git](https://git-scm.com/) | Required for `snapshot`; recommended for real projects |
+| Rust (optional) | Only if building from source |
+
+## Install
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kiket-dev/attestack/main/scripts/install.sh | bash
+```
+
+See the [Installation guide](/getting-started/installation/) for manual downloads or building from source.
+
+<DemoGif
+  src={quickstartGif}
+  alt="Terminal demo of a full Attestack session from init through verify"
+  caption="End-to-end session: init → start → record → bundle → verify."
+/>
+
+Regenerate locally: `./scripts/render-demos.sh` (requires [VHS](https://github.com/charmbracelet/vhs)).
+
+## Walkthrough
+
+### 1. Initialize a project
+
+Create a Git repo and initialize Attestack in it:
+
+```bash
+mkdir my-project && cd my-project
+git init -b main
+echo "hello" > README.md
+git add README.md && git commit -m "init"
+
+attestack init
+attestack doctor
+```
+
+### 2. Start a session
+
+Open a session with a descriptive title. Attestack captures an initial Git snapshot when inside a repo:
+
+```bash
+attestack start "demo session"
+attestack status
+```
+
+### 3. Record work
+
+Run commands, add notes, and capture Git state as you go:
+
+```bash
+attestack run -- echo hello
+attestack note "Reviewed generated change"
+attestack snapshot
+```
+
+### 4. Close and review
+
+Stopping the session writes a Markdown report under `.attestack/sessions/<id>/reports/`:
+
+```bash
+attestack stop
+attestack report
+```
+
+### 5. Export and verify
+
+Create a signed bundle and verify it offline:
+
+```bash
+attestack bundle create
+attestack verify .attestack/bundles/*.attestack.zip
+```
+
+:::tip
+Use `--redact-paths` when sharing bundles outside your machine:
+
+```bash
+attestack bundle create --redact-paths
+```
+:::
+
+## Scripting with JSON
+
+Most commands accept `--json` for automation:
+
+```bash
+attestack status --json
+attestack verify .attestack/bundles/demo.attestack.zip --json
+attestack doctor --json
+```
+
+## Next steps
+
+- [Installation](/getting-started/installation/) — release binaries and install script
+- [Use cases](/getting-started/use-cases/) — who Attestack is for and why
+- [CI integration](/integrations/ci/) — GitHub Actions and generic CI
+- [Agent guide](/integrations/agent-guide/) — `attestack agent` and MCP server
+- [CLI reference](/reference/cli/) — every command, flag, and exit code
+- [Data model](/concepts/data-model/) — sessions, events, and bundles
+- [Security model](/concepts/security-model/) — keys, privacy, and verification

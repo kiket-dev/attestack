@@ -1,5 +1,7 @@
-# Contributing
-
+---
+title: "Contributing"
+description: "How to contribute to Attestack."
+---
 Thank you for contributing to Attestack.
 
 ## Development setup

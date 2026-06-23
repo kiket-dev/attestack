@@ -1,0 +1,94 @@
+---
+title: "Harness integrations"
+description: "LangGraph, Inspect AI, OpenHands, Aider, and wrappers."
+---
+Orchestration frameworks (LangGraph, Inspect AI, eval runners, shell agents) integrate with Attestack via **callback adapters** or **session wrappers**. Editor agents (Cursor, Claude Code) should use [Agent setup](/integrations/agent-setup/) and MCP instead.
+
+## Callback adapter (LangGraph)
+
+LangGraph and LangChain emit tool and model lifecycle events through `BaseCallbackHandler`. The reference handler hashes payloads and appends Attestack `ai.*` events via the CLI.
+
+```python
+from attestack_callback import AttestackCallbackHandler, attestack_session
+
+handler = AttestackCallbackHandler()
+
+with attestack_session("my graph run"):
+    graph.invoke(
+        {"messages": [("user", "…")]},
+        config={"callbacks": [handler]},
+    )
+```
+
+**Example:** [`examples/harnesses/langgraph/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/langgraph)
+
+| LangChain callback | Attestack event |
+|--------------------|-----------------|
+| Tool end | `ai.tool_call` (input + output hashes) |
+| Model start / end | `ai.prompt` + `ai.response` hashes |
+| `record_decision()` | `ai.decision` |
+
+Run the demo (no API key):
+
+```bash
+cd examples/harnesses/langgraph
+./run_demo.sh
+attestack verify .attestack/bundles/*.attestack.zip --strict
+```
+
+## Callback adapter (Inspect AI)
+
+Inspect AI hooks (`on_sample_event`, `on_run_start`, `on_run_end`) map completed tool/model events to Attestack. Uses `mockllm/model` in the demo — no API key.
+
+**Example:** [`examples/harnesses/inspect-ai/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/inspect-ai)
+
+```bash
+cd examples/harnesses/inspect-ai
+./run_demo.sh
+```
+
+Import your hooks module from the task file so `@hooks` registers before `inspect eval` runs.
+
+## Session wrapper (OpenHands, Aider, eval runners)
+
+Any harness that runs shell commands can wrap a session without code changes to Attestack:
+
+| Harness | Example |
+|---------|---------|
+| OpenHands | [`examples/harnesses/openhands/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/openhands) |
+| Aider | [`examples/harnesses/aider/`](https://github.com/kiket-dev/attestack/tree/main/examples/harnesses/aider) |
+| Generic | `scripts/agent-session.sh` |
+
+```bash
+./scripts/agent-session.sh start "eval run"
+attestack run -- npm test          # optional: record subprocess steps
+./scripts/agent-session.sh finish  # stop + bundle create + verify
+```
+
+OpenHands and Aider include `run-with-evidence.sh` wrappers you can copy or call from your project root.
+
+## Production use in your repo
+
+Merge Attestack MCP into an existing Cursor config (keeps your other MCP servers):
+
+```bash
+/path/to/attestack/scripts/dogfood-agent.sh --merge cursor
+```
+
+Add project scripts for daily use — see [Kiket's `evidence-session.sh`](https://github.com/kiket-dev/kiket2/blob/main/scripts/evidence-session.sh) and `pnpm evidence:*` wrappers as a reference implementation.
+
+## CI entrypoints
+
+GitHub Actions, Dagger, Earthly, and Nix: see [CI integration](/integrations/ci/) and `examples/github-actions/`.
+
+Pull requests on GitHub get an automated evidence summary comment when the CI evidence workflow runs.
+
+## Verify
+
+Every integration should produce a bundle that passes:
+
+```bash
+attestack verify .attestack/bundles/*.attestack.zip --strict
+```
+
+Raw prompts and tool I/O are not stored by default — only SHA-256 hashes.

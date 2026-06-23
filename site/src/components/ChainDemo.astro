@@ -1,0 +1,105 @@
+---
+---
+
+<div class="chain-demo" data-chain-demo>
+  <div class="chain-demo-header">
+    <h3>Try it: tamper with the chain</h3>
+    <div class="chain-demo-actions">
+      <button type="button" class="chain-btn" data-action="reset">Reset</button>
+      <button type="button" class="chain-btn chain-btn-primary" data-action="tamper">
+        Tamper event 2
+      </button>
+      <button type="button" class="chain-btn chain-btn-primary" data-action="verify">
+        Run verify
+      </button>
+    </div>
+  </div>
+
+  <div class="chain-events" data-events>
+    <div class="chain-event" data-index="0">
+      <span>#1 session.started</span>
+      <span class="chain-hash">hash: a3f8…c21</span>
+      <span>✓</span>
+    </div>
+    <div class="chain-event" data-index="1">
+      <span>#2 command.finished</span>
+      <span class="chain-hash" data-hash>hash: 7b2e…9d0 → prev: a3f8…c21</span>
+      <span data-status>✓</span>
+    </div>
+    <div class="chain-event" data-index="2">
+      <span>#3 session.stopped</span>
+      <span class="chain-hash">hash: 91ac…4fe → prev: 7b2e…9d0</span>
+      <span>✓</span>
+    </div>
+  </div>
+
+  <pre class="chain-verify-output" data-output hidden><span class="dim">$ attestack verify session.jsonl</span>
+</pre>
+</div>
+
+<script>
+  function initChainDemo(root: HTMLElement) {
+    const events = root.querySelectorAll<HTMLElement>('[data-index]');
+    const output = root.querySelector<HTMLPreElement>('[data-output]');
+    const event2 = root.querySelector<HTMLElement>('[data-index="1"]');
+    const hashEl = event2?.querySelector<HTMLElement>('[data-hash]');
+    const statusEl = event2?.querySelector<HTMLElement>('[data-status]');
+    let tampered = false;
+
+    const okOutput = `$ attestack verify session.jsonl
+✓ signature valid (Ed25519)
+✓ hash chain intact (3 events)
+✓ manifest matches bundle contents`;
+
+    const failOutput = `$ attestack verify session.jsonl
+✓ signature valid (Ed25519)
+✗ hash chain broken at event #2
+  expected prev: a3f8…c21
+  found prev:    dead…beef
+✗ verification failed`;
+
+    function render(state: 'idle' | 'ok' | 'fail') {
+      if (!output) return;
+      output.hidden = state === 'idle';
+      output.classList.remove('ok', 'fail');
+      if (state === 'ok') {
+        output.classList.add('ok');
+        output.innerHTML = `<span class="dim">$ attestack verify session.jsonl</span>\n<span class="ok-line">✓ signature valid (Ed25519)</span>\n<span class="ok-line">✓ hash chain intact (3 events)</span>\n<span class="ok-line">✓ manifest matches bundle contents</span>`;
+      } else if (state === 'fail') {
+        output.classList.add('fail');
+        output.innerHTML = `<span class="dim">$ attestack verify session.jsonl</span>\n<span class="ok-line">✓ signature valid (Ed25519)</span>\n<span class="fail-line">✗ hash chain broken at event #2</span>\n<span class="fail-line">  expected prev: a3f8…c21</span>\n<span class="fail-line">  found prev:    dead…beef</span>\n<span class="fail-line">✗ verification failed</span>`;
+      }
+    }
+
+    function reset() {
+      tampered = false;
+      events.forEach((el) => el.classList.remove('tampered', 'valid'));
+      if (hashEl) hashEl.textContent = 'hash: 7b2e…9d0 → prev: a3f8…c21';
+      if (statusEl) statusEl.textContent = '✓';
+      render('idle');
+    }
+
+    root.querySelector('[data-action="reset"]')?.addEventListener('click', reset);
+    root.querySelector('[data-action="tamper"]')?.addEventListener('click', () => {
+      tampered = true;
+      event2?.classList.add('tampered');
+      event2?.classList.remove('valid');
+      if (hashEl) hashEl.textContent = 'hash: dead…beef → prev: a3f8…c21 (edited)';
+      if (statusEl) statusEl.textContent = '✗';
+      render('idle');
+    });
+    root.querySelector('[data-action="verify"]')?.addEventListener('click', () => {
+      if (!tampered) {
+        events.forEach((el) => {
+          el.classList.remove('tampered');
+          el.classList.add('valid');
+        });
+        render('ok');
+      } else {
+        render('fail');
+      }
+    });
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-chain-demo]').forEach(initChainDemo);
+</script>

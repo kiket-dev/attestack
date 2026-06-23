@@ -19,4 +19,4 @@ export PATH="$ROOT/target/release:$PATH"
 echo "==> Rendering quickstart-demo.gif"
 vhs scripts/demos/quickstart.tape
 
-echo "==> Done: book/src/img/quickstart-demo.gif"
+echo "==> Done: site/src/assets/img/quickstart-demo.gif"

@@ -10,6 +10,6 @@ Requires [VHS](https://github.com/charmbracelet/vhs) and `ttyd`:
 ./scripts/render-demos.sh
 ```
 
-Output: `book/src/img/quickstart-demo.gif`
+Output: `site/src/assets/img/quickstart-demo.gif`
 
 Commit the GIF so GitHub Pages builds without VHS in CI.

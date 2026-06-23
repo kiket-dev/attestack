@@ -1,5 +1,7 @@
-# Distribution
-
+---
+title: "Distribution"
+description: "Release channels, install paths, and packaging."
+---
 How Attestack is built, released, and published.
 
 ## Channels

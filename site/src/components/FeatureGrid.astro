@@ -1,0 +1,38 @@
+---
+const features = [
+  {
+    icon: '⛓',
+    title: 'Hash-chained events',
+    body: 'Each event links to the previous one. Reordering or editing breaks verification.',
+  },
+  {
+    icon: '📦',
+    title: 'Portable bundles',
+    body: 'Signed zip with session metadata, events, report, and optional artifacts.',
+  },
+  {
+    icon: '🔒',
+    title: 'Private by default',
+    body: 'Data stays local. Command output and diffs are opt-in. Path redaction on export.',
+  },
+  {
+    icon: '✓',
+    title: 'Offline verify',
+    body: 'Recompute digests and Ed25519 signatures — no network, no account.',
+  },
+];
+---
+
+<div class="feature-grid">
+  {
+    features.map((f) => (
+      <div class="feature-card">
+        <h3>
+          <span class="feature-icon">{f.icon}</span>
+          {f.title}
+        </h3>
+        <p>{f.body}</p>
+      </div>
+    ))
+  }
+</div>

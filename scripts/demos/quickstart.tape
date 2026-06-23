@@ -1,7 +1,7 @@
-# Record a quickstart terminal demo → book/src/img/quickstart-demo.gif
+# Record a quickstart terminal demo → site/src/assets/img/quickstart-demo.gif
 # Requires: vhs (https://github.com/charmbracelet/vhs), attestack on PATH
 
-Output book/src/img/quickstart-demo.gif
+Output site/src/assets/img/quickstart-demo.gif
 Set Width 920
 Set Height 480
 Set FontSize 15

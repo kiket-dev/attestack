@@ -1,0 +1,169 @@
+---
+title: Attestack
+description: Local-first proof layer for AI-assisted software work — hash-chained sessions, signed bundles, offline verification.
+template: splash
+hero:
+  tagline: Prove what happened during AI-assisted work — without SaaS, without trust in chat history.
+  actions:
+    - text: Quick start
+      link: /getting-started/quickstart/
+      icon: rocket
+    - text: Install
+      link: /getting-started/installation/
+      icon: download
+      variant: minimal
+    - text: GitHub
+      link: https://github.com/kiket-dev/attestack
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+import ChainDemo from '../../components/ChainDemo.astro';
+import PersonaGrid from '../../components/PersonaGrid.astro';
+import CompareGrid from '../../components/CompareGrid.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import DemoGif from '../../components/DemoGif.astro';
+import Diagram from '../../components/Diagram.astro';
+import quickstartGif from '../../assets/img/quickstart-demo.gif';
+import problemSvg from '../../assets/img/problem-scattered.svg';
+import flowSvg from '../../assets/img/attestack-flow.svg';
+import hashSvg from '../../assets/img/hash-chain.svg';
+import loopSvg from '../../assets/img/session-loop.svg';
+
+<div class="landing-section">
+
+Attestack records commands, notes, Git state, and agent activity into a **hash-chained log**, then exports a **signed bundle** anyone can verify offline.
+
+<PersonaGrid />
+
+</div>
+
+<div class="landing-section">
+
+## See it work
+
+<ChainDemo />
+
+<DemoGif
+  src={quickstartGif}
+  alt="Terminal recording: attestack init through verify"
+  caption="Full session in under a minute — real CLI output."
+/>
+
+</div>
+
+<div class="landing-section">
+
+## The problem
+
+AI coding assistants make work faster — but **accountability gets worse**. Evidence is scattered across Git, CI, chat, and memory. None of it is a single, portable, tamper-evident record.
+
+<Diagram
+  src={problemSvg}
+  alt="Evidence scattered across Git, CI, chat, terminal, and PR comments"
+  caption="Evidence exists — but it is fragmented and hard to verify."
+/>
+
+</div>
+
+<div class="landing-section">
+
+## What Attestack does
+
+1. **Start a session** when work begins (`attestack start`).
+2. **Record facts** — shell commands, notes, Git snapshots, agent tool calls.
+3. **Export a bundle** — signed zip for PRs, tickets, or audits.
+4. **Verify offline** — recompute hashes and check signatures; no server required.
+
+<Diagram
+  src={flowSvg}
+  alt="Start, run, note, agent, stop flowing into signed bundle"
+  caption="One session → one timeline → one portable artifact."
+/>
+
+<Diagram
+  src={hashSvg}
+  alt="Hash-linked events culminating in signed bundle manifest"
+  caption="Each event links to the previous hash; tampering breaks verification."
+/>
+
+<Diagram
+  src={loopSvg}
+  alt="Session loop: start, record, export, verify"
+  caption="Every feature branch can follow the same evidence loop."
+/>
+
+:::note
+Attestack records **what happened**, not whether code is correct or secure. It is evidence tooling — not a substitute for review, testing, or static analysis.
+:::
+
+</div>
+
+<div class="landing-section">
+
+## Before vs after
+
+<CompareGrid />
+
+</div>
+
+<div class="landing-section">
+
+## Why teams use it
+
+<FeatureGrid />
+
+</div>
+
+<div class="landing-section">
+
+## Questions it answers
+
+| Question | How |
+| --- | --- |
+| What happened in this session? | Event timeline + Markdown report |
+| Which commands ran, and did they pass? | `command.finished` events with exit codes |
+| What changed in Git? | Snapshot hashes at start/end |
+| Was the record tampered with? | `attestack verify` on session or bundle |
+| Can I share proof without repo access? | Export `.attestack.zip`; verify anywhere |
+
+</div>
+
+<div class="landing-section">
+
+## Next steps
+
+<CardGrid stagger>
+  <Card title="Install" icon="download" link="/getting-started/installation/">
+    Release binary or install script — get `attestack` on your PATH in one command.
+  </Card>
+  <Card title="Quick start" icon="rocket" link="/getting-started/quickstart/">
+    Record your first session, export a bundle, and verify it offline.
+  </Card>
+  <Card title="Agent setup" icon="setting" link="/integrations/agent-setup/">
+    Connect `attestack-mcp` in Cursor, Claude, or Copilot.
+  </Card>
+  <Card title="CI integration" icon="set-up" link="/integrations/ci/">
+    Wrap tests in a session and upload bundles as workflow artifacts.
+  </Card>
+  <Card title="CLI reference" icon="document" link="/reference/cli/">
+    Every command, flag, and exit code.
+  </Card>
+  <Card title="Security model" icon="open-book" link="/concepts/security-model/">
+    Keys, privacy, redaction, and what verification proves.
+  </Card>
+</CardGrid>
+
+</div>
+
+<div class="landing-section">
+
+## Non-goals
+
+- No SaaS account requirement
+- No blockchain dependency
+- No automatic capture of private AI transcripts
+- No always-on surveillance
+
+</div>
