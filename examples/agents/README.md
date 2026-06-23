@@ -34,3 +34,7 @@ See [Agent setup guide](../../docs/agent-setup.md) for full instructions.
 ```
 
 Templates use placeholders `__ATTESTACK_MCP_BIN__` and `__ATTESTACK_REPO_ROOT__` — the setup script replaces them automatically.
+
+## Orchestration harnesses
+
+For LangGraph and similar frameworks, see [harness examples](../harnesses/README.md) (callback adapter pattern).

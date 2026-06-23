@@ -79,6 +79,26 @@ See `examples/agents/README.md`.
 | `attestack_agent_decision` | Record a decision summary |
 | `attestack_snapshot` | Capture Git snapshot (requires Git repo) |
 
+## Orchestration harnesses (LangGraph)
+
+For LangGraph, LangChain, and similar frameworks, attach a callback handler that hashes tool and model I/O and calls `attestack agent` subprocesses.
+
+**Reference example:** `examples/harnesses/langgraph/`
+
+```python
+from attestack_callback import AttestackCallbackHandler, attestack_session
+
+handler = AttestackCallbackHandler()
+
+with attestack_session("my graph run"):
+    graph.invoke(
+        {"messages": [("user", "…")]},
+        config={"callbacks": [handler]},
+    )
+```
+
+See [harness examples](../examples/harnesses/README.md) for patterns (callback adapter, session wrapper, CI).
+
 ## Shell wrapper pattern
 
 For agents without MCP, wrap critical commands:

@@ -21,6 +21,7 @@
 - [CI integration](ci-integration.md)
 - [Agent setup (Cursor, Claude, Copilot, …)](agent-setup.md)
 - [Agent guide](agent-guide.md)
+- [Harness integrations (LangGraph, …)](harness-integrations.md)
 - [Distribution](distribution.md)
 - [Releasing (maintainers)](releasing.md)
 

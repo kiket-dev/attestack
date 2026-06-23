@@ -32,6 +32,10 @@ rm -rf "$TMP"
 echo "Agent setup smoke passed."
 
 echo ""
+echo "==> LangGraph harness smoke"
+./scripts/harness-langgraph-smoke.sh
+
+echo ""
 echo "==> mdBook build"
 if command -v mdbook >/dev/null 2>&1; then
   mdbook build book
