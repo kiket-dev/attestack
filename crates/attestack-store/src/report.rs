@@ -133,6 +133,109 @@ pub fn render_session_report(
     SessionReport { markdown: lines.join("\n") }
 }
 
+pub struct PrSummaryOptions {
+    pub bundle_path: Option<PathBuf>,
+    pub bundle_sha256: Option<String>,
+}
+
+/// Compact Markdown suitable for pasting into a PR description.
+pub fn render_pr_summary(
+    session: &Session,
+    events: &[Event],
+    verification: Option<&VerificationReport>,
+    options: &PrSummaryOptions,
+) -> String {
+    let mut lines = vec![
+        "## Attestack evidence".into(),
+        String::new(),
+        format!("**Session:** `{}`", session.session_id),
+        format!("**Title:** {}", session.title),
+        format!("**Status:** {:?}", session.status),
+    ];
+
+    if let Some(repo) = &session.repo {
+        lines.push(format!("**Repository:** {}", repo.root));
+    }
+    lines.push(String::new());
+
+    lines.push("### Commands".into());
+    let commands: Vec<_> = events
+        .iter()
+        .filter_map(|event| match &event.payload {
+            EventPayload::CommandFinished(payload) => Some(payload),
+            _ => None,
+        })
+        .collect();
+    if commands.is_empty() {
+        lines.push("- None recorded".into());
+    } else {
+        for payload in commands {
+            lines.push(format!(
+                "- exit **{}** in {} ms (`{}`)",
+                payload.exit_code, payload.duration_ms, payload.command_id
+            ));
+        }
+    }
+    lines.push(String::new());
+
+    let notes: Vec<_> = events
+        .iter()
+        .filter_map(|event| match &event.payload {
+            EventPayload::SessionNoteAdded(payload) => Some(payload.text.as_str()),
+            _ => None,
+        })
+        .collect();
+    if !notes.is_empty() {
+        lines.push("### Notes".into());
+        for note in notes {
+            lines.push(format!("- {note}"));
+        }
+        lines.push(String::new());
+    }
+
+    let snapshots: Vec<_> = events
+        .iter()
+        .filter_map(|event| match &event.payload {
+            EventPayload::GitSnapshot(payload) => Some(payload),
+            _ => None,
+        })
+        .collect();
+    if !snapshots.is_empty() {
+        lines.push("### Git".into());
+        for snapshot in snapshots {
+            let head = snapshot.head.as_deref().unwrap_or("unknown");
+            let branch = snapshot.branch.as_deref().unwrap_or("unknown");
+            lines.push(format!("- `{head}` on `{branch}` (dirty={})", snapshot.dirty));
+        }
+        lines.push(String::new());
+    }
+
+    lines.push("### Verification".into());
+    match verification {
+        Some(report) if report.verified => lines.push("- Local session chain: **verified**".into()),
+        Some(report) => {
+            lines.push("- Local session chain: **failed**".into());
+            for error in &report.errors {
+                lines.push(format!("  - {error}"));
+            }
+        }
+        None => lines.push("- Local session chain: not checked".into()),
+    }
+
+    if let Some(path) = &options.bundle_path {
+        lines.push(String::new());
+        lines.push("### Verify bundle".into());
+        lines.push("```bash".into());
+        lines.push(format!("attestack verify {}", path.display()));
+        lines.push("```".into());
+        if let Some(digest) = &options.bundle_sha256 {
+            lines.push(format!("Bundle SHA256: `{digest}`"));
+        }
+    }
+
+    lines.join("\n")
+}
+
 fn event_kind_label(kind: EventKind) -> &'static str {
     match kind {
         EventKind::SessionStarted => "session.started",
@@ -170,6 +273,16 @@ impl Store {
         let events = self.read_events(&session.session_id)?;
         let verification = verify_local_session(&self.session_dir(&session.session_id)).ok();
         Ok(render_session_report(session, &events, verification.as_ref(), options))
+    }
+
+    pub fn generate_pr_summary(
+        &self,
+        session: &Session,
+        options: &PrSummaryOptions,
+    ) -> crate::Result<String> {
+        let events = self.read_events(&session.session_id)?;
+        let verification = verify_local_session(&self.session_dir(&session.session_id)).ok();
+        Ok(render_pr_summary(session, &events, verification.as_ref(), options))
     }
 
     pub fn write_session_report(
@@ -224,5 +337,31 @@ mod tests {
         assert!(report.markdown.contains("billing fix"));
         assert!(report.markdown.contains("reviewed auth"));
         assert!(report.markdown.contains("session.stopped"));
+    }
+
+    #[test]
+    fn pr_summary_is_compact() {
+        let dir = tempdir().unwrap();
+        let store = Store::init(dir.path()).unwrap();
+        let identity_id = store.config().unwrap().default_identity_id;
+        let session = new_session("PR demo".into(), identity_id);
+        store.create_session(session.clone()).unwrap();
+        store
+            .append_typed_event(
+                &session.session_id,
+                EventKind::SessionNoteAdded,
+                EventPayload::SessionNoteAdded(SessionNoteAddedPayload { text: "ship it".into() }),
+            )
+            .unwrap();
+
+        let summary = store
+            .generate_pr_summary(
+                &session,
+                &PrSummaryOptions { bundle_path: None, bundle_sha256: None },
+            )
+            .unwrap();
+        assert!(summary.contains("## Attestack evidence"));
+        assert!(summary.contains("ship it"));
+        assert!(!summary.contains("## Timeline"));
     }
 }

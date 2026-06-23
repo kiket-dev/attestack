@@ -10,6 +10,7 @@ book/book/
 
 # Local planning notes (not published)
 /todo.md
+/docs/plan.md
 /docs/open-questions.md
 /docs/agent-implementation-plan.md
 /docs/roadmap.md

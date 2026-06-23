@@ -58,6 +58,12 @@ jobs:
       - name: Run smoke script
         run: ./scripts/smoke.sh
 
+  evidence:
+    needs: smoke
+    uses: ./.github/workflows/attestack-evidence.yml
+    permissions:
+      contents: read
+
   docs:
     runs-on: ubuntu-latest
     steps:

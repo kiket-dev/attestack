@@ -243,7 +243,7 @@ pub use bundle::{
 };
 pub use doctor::{run_doctor, CheckStatus, DoctorCheck, DoctorReport};
 pub use identity::{user_keys_dir, Identity, IdentityError, DEFAULT_IDENTITY_FILE};
-pub use report::{render_session_report, ReportOptions, SessionReport};
+pub use report::{render_session_report, PrSummaryOptions, ReportOptions, SessionReport};
 
 pub use artifacts::{default_output_limit, LimitedBuffer};
 pub use git::{capture_snapshot, is_git_repo, GitError};

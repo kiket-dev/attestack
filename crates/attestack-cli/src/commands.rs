@@ -7,7 +7,7 @@ use attestack_core::{
 use attestack_store::{
     git_skip_message, is_git_repo, load_public_key_from_file, load_public_key_from_store,
     new_session, run_doctor, verify_bundle_file, verify_local_session, BundleCreateOptions,
-    DoctorReport, ReportOptions, Store, StoreError, STORE_DIR,
+    DoctorReport, PrSummaryOptions, ReportOptions, Store, StoreError, STORE_DIR,
 };
 
 pub fn init(repo_root: &Path, force: bool, update_gitignore: bool) -> Result<PathBuf, String> {
@@ -182,6 +182,26 @@ pub fn report(
     } else {
         Ok((session, report.markdown))
     }
+}
+
+pub fn pr_summary(
+    repo_root: &Path,
+    session_id: Option<String>,
+    bundle: Option<PathBuf>,
+) -> Result<(Session, String), String> {
+    let store = Store::open(repo_root).map_err(format_store_error)?;
+    let session = store.resolve_session_for_report(session_id).map_err(format_store_error)?;
+
+    let bundle_sha256 = bundle.as_ref().map(|path| sha256_file(path)).transpose()?;
+    let summary = store
+        .generate_pr_summary(&session, &PrSummaryOptions { bundle_path: bundle, bundle_sha256 })
+        .map_err(format_store_error)?;
+    Ok((session, summary))
+}
+
+fn sha256_file(path: &Path) -> Result<String, String> {
+    let bytes = std::fs::read(path).map_err(|err| err.to_string())?;
+    Ok(attestack_core::sha256_hex(&bytes))
 }
 
 pub fn doctor(repo_root: &Path) -> DoctorReport {

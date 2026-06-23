@@ -4,7 +4,7 @@ Attestack can record CI runs as tamper-evident sessions and export signed bundle
 
 ## GitHub Actions (recommended)
 
-Copy `examples/github-actions/attestack-evidence.yml` into `.github/workflows/` or call it as a reusable workflow.
+Copy `.github/workflows/attestack-evidence.yml` into your repo or call it as a reusable workflow from CI.
 
 The example workflow:
 
@@ -39,7 +39,14 @@ attestack bundle create
 attestack verify .attestack/bundles/*.attestack.zip
 ```
 
-Upload the bundle from your CI artifact step.
+After `attestack ci finish`, generate a PR body snippet:
+
+```bash
+BUNDLE="$(ls .attestack/bundles/*.attestack.zip | tail -1)"
+attestack pr-summary --bundle "$BUNDLE"
+```
+
+Paste the Markdown into your pull request description, or pipe it to `gh pr edit --body-file -`.
 
 ## Verifying CI bundles locally
 

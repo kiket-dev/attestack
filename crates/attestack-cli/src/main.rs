@@ -10,8 +10,8 @@ use std::process::ExitCode;
 use attestack_store::BundleCreateOptions;
 use clap::{Parser, Subcommand};
 use commands::{
-    bundle_create, doctor, git_status_message, init, note, report, snapshot, start, status, stop,
-    verify_path,
+    bundle_create, doctor, git_status_message, init, note, pr_summary, report, snapshot, start,
+    status, stop, verify_path,
 };
 use run::{run_command, RunOptions};
 
@@ -96,6 +96,14 @@ enum Commands {
         output: Option<String>,
         #[arg(long)]
         include_command_output: bool,
+        #[arg(long)]
+        json: bool,
+    },
+    /// Print a PR-friendly evidence summary
+    PrSummary {
+        session_id: Option<String>,
+        #[arg(long, help = "Bundle path to include verify instructions")]
+        bundle: Option<String>,
         #[arg(long)]
         json: bool,
     },
@@ -412,6 +420,21 @@ fn run(cli: Cli) -> Result<ExitCode, String> {
                 );
             } else if write_to_file {
                 println!("Report written to {content}");
+            } else {
+                println!("{content}");
+            }
+            Ok(ExitCode::SUCCESS)
+        }
+        Commands::PrSummary { session_id, bundle, json } => {
+            ensure_initialized(&cwd)?;
+            let bundle_path = bundle.map(PathBuf::from);
+            let (session, content) = pr_summary(&cwd, session_id, bundle_path)?;
+            if json {
+                println!(
+                    "{{\"session_id\":\"{}\",\"summary\":{}}}",
+                    json_escape(&session.session_id),
+                    json_string(&content)
+                );
             } else {
                 println!("{content}");
             }
