@@ -153,6 +153,20 @@ Flags:
 - `--include-command-output`
 - `--json`
 
+### `attestack pr-summary [session-id]`
+
+Prints a compact Markdown block suitable for pasting into a pull request description.
+
+Behavior:
+
+- Summarize session title, commands (exit codes), notes, git snapshots, and verification status.
+- With `--bundle`, append offline verify instructions and bundle SHA256.
+
+Flags:
+
+- `--bundle <path>`
+- `--json`
+
 ### `attestack bundle create [session-id]`
 
 Creates a portable evidence bundle.
