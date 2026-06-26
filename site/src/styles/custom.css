@@ -52,6 +52,39 @@
   --sl-content-width: 72rem;
 }
 
+/* Center the content column at every breakpoint (Starlight only auto-centers at 72rem+) */
+.content-panel .sl-container {
+  margin-inline: auto;
+}
+
+/* Splash has no hero image — keep title, tagline, and CTAs centered */
+:root[data-has-hero]:not([data-has-sidebar]) .hero {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  padding-block: clamp(2rem, 4vw, 4rem);
+}
+
+:root[data-has-hero]:not([data-has-sidebar]) .hero .stack,
+:root[data-has-hero]:not([data-has-sidebar]) .hero .copy {
+  text-align: center;
+  align-items: center;
+}
+
+:root[data-has-hero]:not([data-has-sidebar]) .hero .actions {
+  justify-content: center;
+}
+
+:root[data-has-hero]:not([data-has-sidebar]) .hero .copy > * {
+  max-width: 52ch;
+}
+
+/* Doc pages: balance main column when right TOC is present */
+@media (min-width: 72rem) {
+  :root[data-has-sidebar][data-has-toc] {
+    --sl-content-margin-inline: auto;
+  }
+}
+
 .hero {
   position: relative;
 }
